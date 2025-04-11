@@ -18,8 +18,9 @@ app.post("/register",(req,res) =>{
     if(length(password) < 8){
         res.send({"data":"password too short"})
     }
-    const checkUser = `select * from users where email=${email}`
-    if(checkUser === undefined){
+    const checkUserquery = `select * from users where email=${email}`
+    const checkUser = con.query(checkUserquery);
+    if(checkUser){
         res.send({"data":"user already exist"})
     }
     const hashedPassword = bcrypt.hash(password,10);
